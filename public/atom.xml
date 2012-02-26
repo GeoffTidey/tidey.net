@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[A Tidey Blog]]></title>
-  <link href="http://tidey.heroku.com//atom.xml" rel="self"/>
-  <link href="http://tidey.heroku.com//"/>
-  <updated>2012-02-26T00:10:39+00:00</updated>
-  <id>http://tidey.heroku.com//</id>
+  <link href="http://blog.tidey.net//atom.xml" rel="self"/>
+  <link href="http://blog.tidey.net//"/>
+  <updated>2012-02-26T00:17:58+00:00</updated>
+  <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
     
