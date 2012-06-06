@@ -120,7 +120,7 @@ $.domReady(function() {
   testFeatures();
   wrapFlashVideos();
   flashVideoFallback();
-  addCodeLineNumbers();
+//  addCodeLineNumbers();
   getNav();
   addSidebarToggler();
 });

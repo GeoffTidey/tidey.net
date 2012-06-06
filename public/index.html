@@ -7,8 +7,7 @@
     <meta name="author" content="Geoff Tidey">
 
     
-    <meta name="description" content=" Blog Archives
-">
+    <meta name="description" content="Control Flow: From Assembly to Ruby I&#8217;ve recently been converting a bunch of Assembly code into Ruby. Why you may ask? Well the Assembly code &hellip;">
     
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -75,6 +74,176 @@
 </script>
 
 	<div id="content" class="inner">
+
+
+    <article class="post">
+    <h1 class="title"><a href="/blog/2012/04/28/control-flow-from-assembly-to-ruby/">Control Flow: From Assembly to Ruby</a></h1>
+    <div class="entry">
+        <p>I&#8217;ve recently been converting a bunch of Assembly code into Ruby.  Why you may ask?  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it&#8217;s never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby. But most importantly Ruby is just nicer to read &amp; test with [1].</p>
+
+<p>My main issue with the conversion was figuring out what all the JMP type conditional commands equivalent was in Ruby.  From my 2 minutes of google searching I found there doesn&#8217;t seem to be a resource on the web that has a simple quick reference.</p>
+
+<p>So without further ado here&#8217;s my first stab at a Assembly to Ruby for JMP commands cheatsheet.</p>
+
+<p>Given there is a function/method called func0 &amp; a register/variable named al</p>
+
+<table>
+  <tr>
+    <th>Assembly</th><th>Ruby</th>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">jmp</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jc</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jnc</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+ <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+  <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+ <tr>
+    <td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td><td>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+</td>
+  </tr>
+ </table>
+
+
+<p>If you see a mistake or have a suggestion to update, please let me know.</p>
+
+<p>[1] 60% of developers time is spent reading &amp; updating previously written code</p>
+
+<p>[2] http://www.cs.virginia.edu/~evans/cs216/guides/x86.html</p>
+
+        
+        
+    </div>
+    <div class="meta">
+        <div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-28T00:59:00+01:00" pubdate data-updated="true">Apr 28<span>th</span>, 2012</time></div>
+        <div class="tags">
+
+<div class="cat">
+  
+    <a class='category' href='/blog/categories/assembly/'>Assembly</a>, <a class='category' href='/blog/categories/cheatsheet/'>Cheatsheet</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+  
+</div>
+
+</div>
+        
+    </div>
+</article>
 
 <nav id="pagenavi">
     
