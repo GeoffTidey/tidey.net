@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://blog.tidey.net//blog/2012/06/07/control-flow-from-assembly-to-ruby/</loc>
+        <loc>
+            http://blog.tidey.net//blog/2012/06/07/really-controlling-the-flow-from-assembly-to-ruby/
+        </loc>
         <lastmod>2012-06-07T23:31:54+01:00</lastmod>
     </url>
     <url>

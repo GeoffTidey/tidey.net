@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | A Tidey Blog]]></title>
   <link href="http://blog.tidey.net//blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.tidey.net//"/>
-  <updated>2012-06-07T23:32:20+01:00</updated>
+  <updated>2012-06-07T23:40:56+01:00</updated>
   <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Really Controlling the flow: from Assembly to Ruby]]></title>
-    <link href="http://blog.tidey.net//blog/2012/06/07/control-flow-from-assembly-to-ruby/"/>
+    <link href="http://blog.tidey.net//blog/2012/06/07/really-controlling-the-flow-from-assembly-to-ruby/"/>
     <updated>2012-06-07T13:37:00+01:00</updated>
-    <id>http://blog.tidey.net//blog/2012/06/07/control-flow-from-assembly-to-ruby</id>
+    <id>http://blog.tidey.net//blog/2012/06/07/really-controlling-the-flow-from-assembly-to-ruby</id>
     <content type="html"><![CDATA[<p>I've recently been converting a bunch of <a href="http://www.cs.virginia.edu/~evans/cs216/guides/x86.html">Assembly</a> code into Ruby.  ZOMG Why, Why, Why?  You may well ask.  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it's never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby, and most importantly Ruby allows me (and you) to control the machine, rather than the other way around.  <a href="http://www.artima.com/intv/ruby4.html">We are the masters. They are the slaves!</a></p>
 
 <p>My main issue with the conversion was figuring out what the JMP type conditional commands equivalent was in Ruby.  From my 2 minutes of google searching I found there doesn't seem to be a resource on the web that has a simple quick reference.</p>
