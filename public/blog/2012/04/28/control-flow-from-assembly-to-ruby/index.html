@@ -7,7 +7,7 @@
 	<meta name="author" content="Geoff Tidey">
 
 	
-	<meta name="description" content="I&#8217;ve recently been converting a bunch of Assembly code into Ruby. Why you may ask? Well the Assembly code is Intel x86 flavoured, it&#8217;s &hellip;">
+	<meta name="description" content="I&#8217;ve recently been converting a bunch of Assembly [1] code into Ruby. Why you may ask? Well the Assembly code is Intel x86 flavoured, it&#8217; &hellip;">
 	
 	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
 
@@ -85,13 +85,13 @@
 
 	<div id="content" class="inner"><article class="post">
 	<h1 class="title">Control Flow: From Assembly to Ruby</h1>
-	<div class="entry-content"><p>I&#8217;ve recently been converting a bunch of Assembly code into Ruby.  Why you may ask?  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it&#8217;s never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby. But most importantly Ruby is just nicer to read &amp; test with [1].</p>
+	<div class="entry-content"><p>I&#8217;ve recently been converting a bunch of Assembly [1] code into Ruby.  Why you may ask?  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it&#8217;s never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby, and most importantly Ruby allows me (and you) to control the machine, rather than the other way around [2].</p>
 
-<p>My main issue with the conversion was figuring out what all the JMP type conditional commands equivalent was in Ruby.  From my 2 minutes of google searching I found there doesn&#8217;t seem to be a resource on the web that has a simple quick reference.</p>
+<p>My main issue with the conversion was figuring out what the JMP type conditional commands equivalent was in Ruby.  From my 2 minutes of google searching I found there doesn&#8217;t seem to be a resource on the web that has a simple quick reference.</p>
 
-<p>So without further ado here&#8217;s my first stab at a Assembly to Ruby for JMP commands cheatsheet.</p>
+<p>So without further ado, here&#8217;s my first stab at an Assembly to Ruby for JMP commands cheatsheet.</p>
 
-<p>Given there is a function/method called func0 &amp; a register/variable named al</p>
+<p>(Given there is a function/method called <strong>func0</strong> &amp; a register/variable named <strong>al</strong>)</p>
 
 <table>
   <tr>
@@ -217,9 +217,9 @@
 
 <p>If you see a mistake or have a suggestion to update, please let me know.</p>
 
-<p>[1] 60% of developers time is spent reading &amp; updating previously written code</p>
+<p>[1] http://www.cs.virginia.edu/~evans/cs216/guides/x86.html</p>
 
-<p>[2] http://www.cs.virginia.edu/~evans/cs216/guides/x86.html</p>
+<p>[2] http://www.artima.com/intv/ruby4.html</p>
 </div>
 
 
