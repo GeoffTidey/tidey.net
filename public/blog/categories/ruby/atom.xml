@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | A Tidey Blog]]></title>
   <link href="http://blog.tidey.net//blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.tidey.net//"/>
-  <updated>2012-06-07T22:46:54+01:00</updated>
+  <updated>2012-06-07T23:32:20+01:00</updated>
   <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
@@ -14,19 +14,19 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Control flow: from Assembly to Ruby]]></title>
-    <link href="http://blog.tidey.net//blog/2012/04/28/control-flow-from-assembly-to-ruby/"/>
-    <updated>2012-04-28T00:59:00+01:00</updated>
-    <id>http://blog.tidey.net//blog/2012/04/28/control-flow-from-assembly-to-ruby</id>
-    <content type="html"><![CDATA[<p>I've recently been converting a bunch of Assembly [1] code into Ruby.  Why you may ask?  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it's never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby, and most importantly Ruby allows me (and you) to control the machine, rather than the other way around [2].</p>
+    <title type="html"><![CDATA[Really Controlling the flow: from Assembly to Ruby]]></title>
+    <link href="http://blog.tidey.net//blog/2012/06/07/control-flow-from-assembly-to-ruby/"/>
+    <updated>2012-06-07T13:37:00+01:00</updated>
+    <id>http://blog.tidey.net//blog/2012/06/07/control-flow-from-assembly-to-ruby</id>
+    <content type="html"><![CDATA[<p>I've recently been converting a bunch of <a href="http://www.cs.virginia.edu/~evans/cs216/guides/x86.html">Assembly</a> code into Ruby.  ZOMG Why, Why, Why?  You may well ask.  Well the Assembly code is <a href="http://en.wikipedia.org/wiki/X86_assembly_language">Intel x86 flavoured</a>, it's never been run on Linux &amp; we want to run on Linux.  I could have converted to C, but everyone in my current team writes Ruby, and most importantly Ruby allows me (and you) to control the machine, rather than the other way around.  <a href="http://www.artima.com/intv/ruby4.html">We are the masters. They are the slaves!</a></p>
 
 <p>My main issue with the conversion was figuring out what the JMP type conditional commands equivalent was in Ruby.  From my 2 minutes of google searching I found there doesn't seem to be a resource on the web that has a simple quick reference.</p>
 
-<p>So without further ado, here's my first stab at an Assembly to Ruby for JMP commands cheatsheet.</p>
-
-<p>(Given there is a function/method called <strong>func0</strong> &amp; a register/variable named <strong>al</strong>)</p>
+<p>So without further ado, here's my first stab at an Intel x86 Assembly to Ruby for JMP commands cheatsheet.</p>
 
 <table>
+  <tr><td colspan='2'> (<i> Given there is a function/method called <b>func0</b> &amp; a register/variable named <b>al</b> </i>)
+</td></tr>
   <tr>
     <th>Assembly</th><th>Ruby</th>
   </tr>
@@ -40,83 +40,79 @@
   <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jc</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
   <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jnc</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
   <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
+</span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td>
+  </tr>
+  <tr>
+    <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
   <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></td>
-  </tr>
-  <tr>
-    <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
-</span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
  <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">test</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
   <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
  <tr>
     <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">01Ah</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x1A</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
  </table>
 
 
-<p>If you see a mistake or have a suggestion to update, please let me know.</p>
-
-<p>[1] http://www.cs.virginia.edu/~evans/cs216/guides/x86.html</p>
-
-<p>[2] http://www.artima.com/intv/ruby4.html</p>
+<p>If you see a mistake, have a query or a suggestion to update or just found this useful, please let me know.</p>
 ]]></content>
   </entry>
   
