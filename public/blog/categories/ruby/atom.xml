@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | A Tidey Blog]]></title>
   <link href="http://blog.tidey.net//blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.tidey.net//"/>
-  <updated>2012-06-08T22:49:48+01:00</updated>
+  <updated>2012-07-24T15:23:48+01:00</updated>
   <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
@@ -52,7 +52,7 @@
 </pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">cmp</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jnc</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">-</span> <span class="mh">0x7B</span> <span class="o">&gt;=</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
   <tr>
@@ -97,7 +97,7 @@
 </pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jnz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">unless</span> <span class="n">al</span> <span class="o">&amp;=</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
  <tr>
@@ -106,7 +106,7 @@
 </pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">and</span> <span class="nb">al</span><span class="p">,</span> <span class="mh">07Bh</span>
 </span><span class='line'><span class="nf">jz</span> <span class="nv">func0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">func0</span> <span class="k">if</span> <span class="n">al</span> <span class="o">&amp;=</span> <span class="mh">0x7B</span> <span class="o">==</span> <span class="mi">0</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></td>
   </tr>
  </table>

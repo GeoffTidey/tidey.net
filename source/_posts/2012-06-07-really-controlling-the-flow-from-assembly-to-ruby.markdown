@@ -28,7 +28,7 @@ jc func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 unless al - 0x
   </tr>
   <tr>
     <td>{% codeblock lang:nasm %}cmp al, 07Bh
-jnc func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 if al - 0x7B == 0{% endcodeblock %}</td>
+jnc func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 if al - 0x7B >= 0{% endcodeblock %}</td>
   </tr>
   <tr>
     <td>{% codeblock lang:nasm %}cmp al, 07Bh
@@ -48,11 +48,11 @@ jz func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 if al & 0x7B =
   </tr>
   <tr>
     <td>{% codeblock lang:nasm %}and al, 07Bh
-jnz func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 unless al & 0x7B == 0{% endcodeblock %}</td>
+jnz func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 unless al &= 0x7B == 0{% endcodeblock %}</td>
   </tr>
  <tr>
     <td>{% codeblock lang:nasm %}and al, 07Bh
-jz func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 if al & 0x7B == 0{% endcodeblock %}</td>
+jz func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 if al &= 0x7B == 0{% endcodeblock %}</td>
   </tr>
  </table>
 
