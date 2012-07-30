@@ -24,7 +24,7 @@ So without further ado, here's my first stab at an Intel x86 Assembly to Ruby fo
   </tr>
   <tr>
     <td>{% codeblock lang:nasm %}cmp al, 07Bh
-jc func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 unless al - 0x7B == 0{% endcodeblock %}</td>
+jc func0{% endcodeblock %}</td><td>{% codeblock lang:ruby %}func0 unless al - 0x7B >= 0{% endcodeblock %}</td>
   </tr>
   <tr>
     <td>{% codeblock lang:nasm %}cmp al, 07Bh
