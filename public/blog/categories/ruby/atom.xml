@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | A Tidey Blog]]></title>
   <link href="http://blog.tidey.net//blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://blog.tidey.net//"/>
-  <updated>2012-07-30T12:42:55+01:00</updated>
+  <updated>2012-07-31T21:48:13+01:00</updated>
   <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SHRD : A ruby interpretation of the Double Precision Shift Right Assembly instruction]]></title>
+    <link href="http://blog.tidey.net//blog/2012/07/31/shrd-a-ruby-interpretation-of-the-double-precision-shift-right-assembly-instruction/"/>
+    <updated>2012-07-31T20:43:00+01:00</updated>
+    <id>http://blog.tidey.net//blog/2012/07/31/shrd-a-ruby-interpretation-of-the-double-precision-shift-right-assembly-instruction</id>
+    <content type="html"><![CDATA[<p>Following on from my <a href="http://blog.tidey.net/blog/2012/06/07/really-controlling-the-flow-from-assembly-to-ruby/">last post on Assembly conversion</a>, I also came across the SHRD instruction.</p>
+
+<p>I already knew about the SHR &amp; SHL command, logical shift right &amp; left respectively, which translates rather easily:</p>
+
+<table>
+  <tr>
+    <th>Assembly</th><th>Ruby</th>
+  </tr>
+  <tr>
+    <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">shr</span> <span class="err">@</span><span class="nb">ax</span><span class="p">,</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@ax</span> <span class="o">&gt;&gt;=</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td>
+  </tr>
+  <tr>
+    <td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">shl</span> <span class="err">@</span><span class="nb">ax</span><span class="p">,</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td><td><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@ax</span> <span class="o">&lt;&lt;=</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></td>
+  </tr>
+ </table>
+
+
+<p>But I was initially stumped when I saw <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">shrd</span> <span class="nb">ax</span><span class="p">,</span> <span class="nb">dl</span><span class="p">,</span> <span class="nb">cl</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div> in the Assembly code listing.</p>
+
+<p>I'd figured out I needed the following test data, from the debugger</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">test_shrd</span>
+</span><span class='line'>  <span class="n">assert_equal</span> <span class="mi">12927</span><span class="p">,</span> <span class="n">shrd</span><span class="p">(</span><span class="mi">40919</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>And then this <a href="https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Extended_Shift_Instructions">link</a> gave me the insight I needed to code it up.</p>
+
+<p>Voila:</p>
+
+<p><div><script src='https://gist.github.com/3218681.js?file='></script>
+<noscript><pre><code>#see https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Extended_Shift_Instructions for more info on shrd
+def shrd(rm16, r16, cl)
+  rm16 &gt;&gt;= cl
+  r16 &lt;&lt;= (16 - cl)
+  rm16 | (r16 &amp; 0xFFFF)
+end</code></pre></noscript></div>
+</p>
+
+<p>The test went from red to green :)</p>
+
+<p>"<a href="http://www.artima.com/intv/ruby4.html">They will not control us</a>.  We will be victourious!!!!!!"</p>
+
+<p><iframe width="640" height="510" src="http://www.youtube.com/embed/n2I3_196BpI " frameborder="0" allowfullscreen></iframe></p>
+
+<p>:D</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Really Controlling the flow: from Assembly to Ruby]]></title>
