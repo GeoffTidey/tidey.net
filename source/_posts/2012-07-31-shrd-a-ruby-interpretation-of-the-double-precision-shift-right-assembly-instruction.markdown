@@ -37,7 +37,14 @@ And then this [link](https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate
 
 Voila:
 
-{% gist 3218681 %}
+{% codeblock lang:ruby %}
+#see https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Extended_Shift_Instructions for more info on shrd
+def shrd(rm16, r16, cl)
+  rm16 >>= cl
+  r16 <<= (16 - cl)
+  rm16 | (r16 & 0xFFFF)
+end
+{% endcodeblock %}
 
 The test went from red to green :)
 
