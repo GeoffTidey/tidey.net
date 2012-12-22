@@ -4,7 +4,7 @@
   <title><![CDATA[A Tidey Blog]]></title>
   <link href="http://blog.tidey.net//atom.xml" rel="self"/>
   <link href="http://blog.tidey.net//"/>
-  <updated>2012-07-31T21:48:13+01:00</updated>
+  <updated>2012-12-22T01:30:37+00:00</updated>
   <id>http://blog.tidey.net//</id>
   <author>
     <name><![CDATA[Geoff Tidey]]></name>
@@ -75,13 +75,19 @@
 
 <p>Voila:</p>
 
-<div><script src='https://gist.github.com/3218681.js?file='></script>
-<noscript><pre><code>#see https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Extended_Shift_Instructions for more info on shrd
-def shrd(rm16, r16, cl)
-  rm16 &gt;&gt;= cl
-  r16 &lt;&lt;= (16 - cl)
-  rm16 | (r16 &amp; 0xFFFF)
-end</code></pre></noscript></div>
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#see https://en.wikibooks.org/wiki/X86_Assembly/Shift_and_Rotate#Extended_Shift_Instructions for more info on shrd</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">shrd</span><span class="p">(</span><span class="n">rm16</span><span class="p">,</span> <span class="n">r16</span><span class="p">,</span> <span class="n">cl</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">rm16</span> <span class="o">&gt;&gt;=</span> <span class="n">cl</span>
+</span><span class='line'>  <span class="n">r16</span> <span class="o">&lt;&lt;=</span> <span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="n">cl</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">rm16</span> <span class="o">|</span> <span class="p">(</span><span class="n">r16</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>The test went from red to green :)</p>
