@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: install | A Tidey Blog]]></title>
+  <link href="http://blog.tidey.net//blog/categories/install/atom.xml" rel="self"/>
+  <link href="http://blog.tidey.net//"/>
+  <updated>2013-03-13T00:27:53+00:00</updated>
+  <id>http://blog.tidey.net//</id>
+  <author>
+    <name><![CDATA[Geoff Tidey]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Burning an ISO to a USB stick on Mac OSX]]></title>
+    <link href="http://blog.tidey.net//blog/2013/03/12/burning-an-iso-to-a-usb-stick-on-mac-osx/"/>
+    <updated>2013-03-12T21:53:00+00:00</updated>
+    <id>http://blog.tidey.net//blog/2013/03/12/burning-an-iso-to-a-usb-stick-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>My kids have dropped my 10+ year old Sony Vaio laptop one final time, so it's time to find another old laptop (they'll do it again) &amp; put a fresh Operating System (OS) on it.  For the past 5 years the old Vaio had been running <a href="http://crunchbang.org/">CrunchBang</a> OS (Statler build) with no problems at all.  It's fast &amp; minimalist, totally perfect for little monkeys (&amp; significant others).  Another big plus is the kids have previously downloaded a few viruses, but as CrunchBang is a variant of the <a href="https://en.wikipedia.org/wiki/Linux">Linux</a> OS the viruses have had no effect as they are targeting Windows OS.   Linux has it's security right, with superuser's only allowed to install software that may do any real damage...  You can still get viruses for Linux, but there aren't as many for sure.</p>
+
+<p><iframe width="640" height="510" src="http://www.youtube.com/embed/yX8yrOAjfKM " frameborder="0" allowfullscreen></iframe></p>
+
+<p>Anyway you probably knew all that already?  Last time I installed CrunchBang I burned a CD, but I wanted to get down with the cool kids and use one of those new fangled USB sticks to install it.  Plus wowzas, the latest Waldorf build has an ISO that is bigger than a CD now!  CrunchBang have some <a href="http://crunchbang.org/forums/viewtopic.php?id=23267">documentation</a> on how to burn to USB, but from another Linux box.  So I thought I'd <a href="http://imgs.xkcd.com/comics/tech_support_cheat_sheet.png">put down what you need to do</a> if you're on OSX.  My google-fu failed me when I tried to look for “Burn a ISO image to USB stick on OSX”</p>
+
+<p>Firstly it's <strong>really important</strong> to find out which device your USB stick is.</p>
+
+<p>Side story: I once worked for a company whose multi-million pound <a href="https://en.wikipedia.org/wiki/VMware_ESX">virtualization system</a> was wiped clean by one of our "IT staff" deciding it was a good idea to format their USB stick from the actual virtualisation machine.  It had devastating effect; they also discovered that some important services were <em>not</em> being backed up!  Oh my, the :shit: really hit the fan that day!!  So please be careful.</p>
+
+<p><iframe width="640" height="510" src="http://www.youtube.com/embed/T2QApwtE8zQ " frameborder="0" allowfullscreen></iframe></p>
+
+<p>If they'd just followed these following steps that should not have happened.</p>
+
+<h3>Find the correct device first:</h3>
+
+<ul>
+<li><p>  Make sure the USB stick is removed from your machine</p></li>
+<li><p>  Open a terminal</p></li>
+<li><p>  Type <code>diskutil list</code></p>
+
+<p>  You then should see something similar to this:</p></li>
+</ul>
+
+
+<p><code>
+/dev/disk0
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.1 GB   disk0
+   1:                        EFI                         209.7 MB   disk0s1
+   2:                  Apple_HFS Macintosh HD            429.9 GB   disk0s2
+   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+   4:       Microsoft Basic Data BOOTCAMP                69.3 GB    disk0s4
+</code></p>
+
+<p>  This is the disk (&amp; partitions) that I do <em>not</em> want to touch!!!  You may have more than one?</p>
+
+<ul>
+<li>  now put the USB stick in and run <code>diskutil list</code> again</li>
+</ul>
+
+
+<p><code>
+/dev/disk0
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *500.1 GB   disk0
+   1:                        EFI                         209.7 MB   disk0s1
+   2:                  Apple_HFS Macintosh HD            429.9 GB   disk0s2
+   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+   4:       Microsoft Basic Data BOOTCAMP                69.3 GB    disk0s4
+/dev/disk1
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:     FDisk_partition_scheme                        *8.1 GB     disk1
+   1:                 DOS_FAT_32 NO NAME                 8.1 GB     disk1s1
+</code></p>
+
+<p>Now you can see there is a new device.  That's the USB stick!!!  <code>/dev/disk1</code>  (You should also probably check that it's big enough to take the ISO you want to burn.)</p>
+
+<h3>Create a DMG</h3>
+
+<ul>
+<li>   Before you can burn to USB you have to convert the ISO to a dmg file:</li>
+</ul>
+
+
+<p>  <code>hdiutil convert -format UDRW -o crunchbang crunchbang-11-20130119-i686.iso</code></p>
+
+<pre><code>Where crunchbang-11-20130119-i686.iso is the current download from CrunchBang, this could of course be *any* ISO.
+</code></pre>
+
+<h3>Burn to the USB stick</h3>
+
+<ul>
+<li><p>  When that's complete run <code>sudo dd if=crunchbang.dmg of=/dev/diskN bs=8192</code></p>
+
+<p>  where the /dev/diskN is the USB disk we discovered earlier. In my case /dev/disk1.  I'll repeat it once more, incase you are stupid and you made it this far ;)</p>
+
+<p>  => <strong>!!!!please make sure you reference the correct USB disk!!!!</strong> &lt;==</p>
+
+<p>  From now on I'll reference it as diskN so you don't copy and paste, and then access the wrong disk! :)</p></li>
+<li><p>  If you get the error message: dd: /dev/diskN: Resource busy</p>
+
+<p>  Then run: <code>diskutil unmount diskN</code>  and rerun the last command.</p></li>
+</ul>
+
+
+<h3>Winning!</h3>
+
+<ul>
+<li>  When complete you should see something like:</li>
+</ul>
+
+
+<p><code>
+100224+0 records in
+100224+0 records out
+821035008 bytes transferred in 132.323860 secs (6204739 bytes/sec)
+</code></p>
+
+<ul>
+<li>  Finally, to safely eject the usb stick run <code>diskutil eject /dev/diskN</code></li>
+</ul>
+
+
+<p>Now you have a USB stick (that you may boot from if the ISO is meant to be booted)!</p>
+
+<p><iframe width="640" height="510" src="http://www.youtube.com/embed/FjvFW71zJeM " frameborder="0" allowfullscreen></iframe></p>
+
+<p>BTW. You may have to <a href="https://duckduckgo.com/?q=how+to+get+into+bios+">change your BIOS setting</a> to boot from the USB stick?</p>
+]]></content>
+  </entry>
+  
+</feed>

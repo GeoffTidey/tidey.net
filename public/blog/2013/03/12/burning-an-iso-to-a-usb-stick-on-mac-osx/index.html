@@ -1,0 +1,310 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Burning an ISO to a USB stick on Mac OSX - A Tidey Blog</title>
+	<meta name="author" content="Geoff Tidey">
+
+	
+	<meta name="description" content="My kids have dropped my 10+ year old Sony Vaio laptop one final time, so it&#8217;s time to find another old laptop (they&#8217;ll do it again) &amp &hellip;">
+	
+	<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="A Tidey Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">A Tidey Blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:blog.tidey.net/">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/GeoffTidey" title="Twitter">Twitter</a>
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:blog.tidey.net/">
+	</form>
+</nav>
+
+</header>
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Burning an ISO to a USB Stick on Mac OSX</h1>
+	<div class="entry-content"><p>My kids have dropped my 10+ year old Sony Vaio laptop one final time, so it&#8217;s time to find another old laptop (they&#8217;ll do it again) &amp; put a fresh Operating System (OS) on it.  For the past 5 years the old Vaio had been running <a href="http://crunchbang.org/">CrunchBang</a> OS (Statler build) with no problems at all.  It&#8217;s fast &amp; minimalist, totally perfect for little monkeys (&amp; significant others).  Another big plus is the kids have previously downloaded a few viruses, but as CrunchBang is a variant of the <a href="https://en.wikipedia.org/wiki/Linux">Linux</a> OS the viruses have had no effect as they are targeting Windows OS.   Linux has it&#8217;s security right, with superuser&#8217;s only allowed to install software that may do any real damage&#8230;  You can still get viruses for Linux, but there aren&#8217;t as many for sure.</p>
+
+<iframe width="640" height="510" src="http://www.youtube.com/embed/yX8yrOAjfKM " frameborder="0" allowfullscreen></iframe>
+
+
+<p>Anyway you probably knew all that already?  Last time I installed CrunchBang I burned a CD, but I wanted to get down with the cool kids and use one of those new fangled USB sticks to install it.  Plus wowzas, the latest Waldorf build has an ISO that is bigger than a CD now!  CrunchBang have some <a href="http://crunchbang.org/forums/viewtopic.php?id=23267">documentation</a> on how to burn to USB, but from another Linux box.  So I thought I&#8217;d <a href="http://imgs.xkcd.com/comics/tech_support_cheat_sheet.png">put down what you need to do</a> if you&#8217;re on OSX.  My google-fu failed me when I tried to look for “Burn a ISO image to USB stick on OSX”</p>
+
+<p>Firstly it&#8217;s <strong>really important</strong> to find out which device your USB stick is.</p>
+
+<p>Side story: I once worked for a company whose multi-million pound <a href="https://en.wikipedia.org/wiki/VMware_ESX">virtualization system</a> was wiped clean by one of our &#8220;IT staff&#8221; deciding it was a good idea to format their USB stick from the actual virtualisation machine.  It had devastating effect; they also discovered that some important services were <em>not</em> being backed up!  Oh my, the :shit: really hit the fan that day!!  So please be careful.</p>
+
+<iframe width="640" height="510" src="http://www.youtube.com/embed/T2QApwtE8zQ " frameborder="0" allowfullscreen></iframe>
+
+
+<p>If they&#8217;d just followed these following steps that should not have happened.</p>
+
+<h3>Find the correct device first:</h3>
+
+<ul>
+<li><p>  Make sure the USB stick is removed from your machine</p></li>
+<li><p>  Open a terminal</p></li>
+<li><p>  Type <code>diskutil list</code></p>
+
+<p>  You then should see something similar to this:</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/dev/disk0
+</span><span class='line'>   #:                       TYPE NAME                    SIZE       IDENTIFIER
+</span><span class='line'>   0:      GUID_partition_scheme                        *500.1 GB   disk0
+</span><span class='line'>   1:                        EFI                         209.7 MB   disk0s1
+</span><span class='line'>   2:                  Apple_HFS Macintosh HD            429.9 GB   disk0s2
+</span><span class='line'>   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+</span><span class='line'>   4:       Microsoft Basic Data BOOTCAMP                69.3 GB    disk0s4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  This is the disk (&amp; partitions) that I do <em>not</em> want to touch!!!  You may have more than one?</p>
+
+<ul>
+<li>  now put the USB stick in and run <code>diskutil list</code> again</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/dev/disk0
+</span><span class='line'>   #:                       TYPE NAME                    SIZE       IDENTIFIER
+</span><span class='line'>   0:      GUID_partition_scheme                        *500.1 GB   disk0
+</span><span class='line'>   1:                        EFI                         209.7 MB   disk0s1
+</span><span class='line'>   2:                  Apple_HFS Macintosh HD            429.9 GB   disk0s2
+</span><span class='line'>   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+</span><span class='line'>   4:       Microsoft Basic Data BOOTCAMP                69.3 GB    disk0s4
+</span><span class='line'>/dev/disk1
+</span><span class='line'>   #:                       TYPE NAME                    SIZE       IDENTIFIER
+</span><span class='line'>   0:     FDisk_partition_scheme                        *8.1 GB     disk1
+</span><span class='line'>   1:                 DOS_FAT_32 NO NAME                 8.1 GB     disk1s1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can see there is a new device.  That&#8217;s the USB stick!!!  <code>/dev/disk1</code>  (You should also probably check that it&#8217;s big enough to take the ISO you want to burn.)</p>
+
+<h3>Create a DMG</h3>
+
+<ul>
+<li>   Before you can burn to USB you have to convert the ISO to a dmg file:</li>
+</ul>
+
+
+<p>  <code>hdiutil convert -format UDRW -o crunchbang crunchbang-11-20130119-i686.iso</code></p>
+
+<pre><code>Where crunchbang-11-20130119-i686.iso is the current download from CrunchBang, this could of course be *any* ISO.
+</code></pre>
+
+<h3>Burn to the USB stick</h3>
+
+<ul>
+<li><p>  When that&#8217;s complete run <code>sudo dd if=crunchbang.dmg of=/dev/diskN bs=8192</code></p>
+
+<p>  where the /dev/diskN is the USB disk we discovered earlier. In my case /dev/disk1.  I&#8217;ll repeat it once more, incase you are stupid and you made it this far ;)</p>
+
+<p>  => <strong>!!!!please make sure you reference the correct USB disk!!!!</strong> &lt;==</p>
+
+<p>  From now on I&#8217;ll reference it as diskN so you don&#8217;t copy and paste, and then access the wrong disk! :)</p></li>
+<li><p>  If you get the error message: dd: /dev/diskN: Resource busy</p>
+
+<p>  Then run: <code>diskutil unmount diskN</code>  and rerun the last command.</p></li>
+</ul>
+
+
+<h3>Winning!</h3>
+
+<ul>
+<li>  When complete you should see something like:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>100224+0 records in
+</span><span class='line'>100224+0 records out
+</span><span class='line'>821035008 bytes transferred in 132.323860 secs (6204739 bytes/sec)</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>  Finally, to safely eject the usb stick run <code>diskutil eject /dev/diskN</code></li>
+</ul>
+
+
+<p>Now you have a USB stick (that you may boot from if the ISO is meant to be booted)!</p>
+
+<iframe width="640" height="510" src="http://www.youtube.com/embed/FjvFW71zJeM " frameborder="0" allowfullscreen></iframe>
+
+
+<p>BTW. You may have to <a href="https://duckduckgo.com/?q=how+to+get+into+bios+">change your BIOS setting</a> to boot from the USB stick?</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-12T21:53:00+00:00" pubdate data-updated="true">Mar 12<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/burn/'>burn</a>, <a class='category' href='/blog/categories/crunchbang/'>crunchbang</a>, <a class='category' href='/blog/categories/install/'>install</a>, <a class='category' href='/blog/categories/iso/'>iso</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/usb/'>usb</a>
+
+
+</div>
+	
+</div></article>
+<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Geoff Tidey
+
+</footer>
+  
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/GeoffTidey">GeoffTidey</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('GeoffTidey', 4, false);
+	})(jQuery);
+</script>
+
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'atideyblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.tidey.net//blog/2013/03/12/burning-an-iso-to-a-usb-stick-on-mac-osx/';
+        var disqus_url = 'http://blog.tidey.net//blog/2013/03/12/burning-an-iso-to-a-usb-stick-on-mac-osx/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-20668609-3']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
